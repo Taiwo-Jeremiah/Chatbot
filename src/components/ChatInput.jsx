@@ -1,0 +1,47 @@
+import {useRef, useState, useEffect} from "react";
+
+function ChatInput({ chatMessages, setChatMessages }) {
+  const [inputText, setInputText] = useState("");
+
+  function saveInputText(event) {
+    setInputText(event.target.value);
+  }
+
+  function sendMessage() {
+    const newChatMessages = [
+      ...chatMessages,
+      {
+        message: inputText,
+        sender: "user",
+        id: crypto.randomUUID(),
+      },
+    ];
+    setChatMessages(newChatMessages);
+
+    const response = Chatbot.getResponse(inputText);
+    setChatMessages([
+      ...newChatMessages,
+      {
+        message: response,
+        sender: "robot",
+        id: crypto.randomUUID(),
+      },
+    ]);
+
+    setInputText("");
+  }
+  return (
+    <div className="chat-input-container">
+      <input
+        placeholder="Send a messgae to chatbot"
+        size="30"
+        value={inputText}
+        onChange={saveInputText}
+        className="chat-input"
+      />
+      <button onClick={sendMessage} className="send-button">
+        Send
+      </button>
+    </div>
+  );
+}
