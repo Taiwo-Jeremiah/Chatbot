@@ -1,13 +1,20 @@
 import { useState } from "react";
-import { Chatbot } from "supersimpledev";
+import { getBotReply } from "./botLogic";
+// import { Chatbot } from "supersimpledev";
 import './ChatInput.css'
 
 export function ChatInput({ chatMessages, setChatMessages }) {
   const [inputText, setInputText] = useState("");
 
-  function saveInputText(event) {
-    setInputText(event.target.value);
+  function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      sendMessage();
+    }
   }
+
+  function saveInputText(event) {
+  setInputText(event.target.value);
+}
 
   function sendMessage() {
     const newChatMessages = [
@@ -20,7 +27,9 @@ export function ChatInput({ chatMessages, setChatMessages }) {
     ];
     setChatMessages(newChatMessages);
 
-    const response = Chatbot.getResponse(inputText);
+    // const response = Chatbot.getResponse(inputText);
+    // REPLACE WITH THIS:
+const response = getBotReply(inputText);
     setChatMessages([
       ...newChatMessages,
       {
@@ -39,6 +48,7 @@ export function ChatInput({ chatMessages, setChatMessages }) {
         size="30"
         value={inputText}
         onChange={saveInputText}
+        onKeyDown={handleKeyPress}
         className="chat-input"
       />
       <button onClick={sendMessage} className="send-button">
