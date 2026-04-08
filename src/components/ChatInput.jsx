@@ -4,6 +4,7 @@ import { getBotReply } from "./botLogic";
 import './ChatInput.css'
 
 export function ChatInput({ chatMessages, setChatMessages }) {
+  // useState(""); returns an array with two elements, the first element is the current state value (inputText) and the second element is a function that allows us to update that state (setInputText). We can use array destructuring to assign these values to variables. So, inputText will hold the current value of the input field, and setInputText will be used to update that value whenever the user types something in the input field.
   const [inputText, setInputText] = useState("");
 
   function handleKeyPress(event) {
